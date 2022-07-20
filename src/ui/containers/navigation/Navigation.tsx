@@ -1,25 +1,28 @@
-import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import TabNavigations from './TabNavigations';
-import SignIn from '../../screens/auth/SignIn';
+import React from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import SignIn from "../../screens/auth/SignIn";
+import Camera from "../../screens/Camera";
+import SomeScreen from "../../screens/SomeScreen";
+import StackNavigator from "./StackNavigator";
 
-const Drawer = createDrawerNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const Navigation = () => {
-
   return (
-    <Drawer.Navigator
-      initialRouteName="Content"
+    <Tab.Navigator
+      initialRouteName="Pokemons"
+      tabBar={() => null}
+      screenOptions={{
+        tabBarShowLabel: false,
+      }}
     >
-      <Drawer.Screen
-        name="Sign in"
-        component={SignIn} />
-      <Drawer.Screen
-        name="Content"
-        component={TabNavigations}
-        options={{ headerShown: false }} />
-    </Drawer.Navigator>
-  );
-};
+      <Tab.Screen name="SignIn" component={SignIn}/>
+      <Tab.Screen name="Pokemons" component={StackNavigator} />
+      <Tab.Screen name="Camera" component={Camera} />
+      <Tab.Screen name="Gallery" key="gallery" component={SomeScreen} />
+
+    </Tab.Navigator>
+  )
+}
 
 export default Navigation;
