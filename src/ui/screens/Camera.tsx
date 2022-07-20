@@ -45,16 +45,7 @@ const Camera: React.FC<PropsType> = (props) => {
           buttonNegative: 'Cancel',
         }}
       >
-        {/* {((params: Parameters<FaCC>): JSX.Element => (
-          <View>
-            <Text>
-              ASDadas
-            </Text>
-          </View>
-          // Error in the package's types
-        )) as unknown as React.ReactNode} */}
         {(({ camera, status }: keyof FaCC): JSX.Element => {
-          // const { camera, status } = params[0];
           if (status !== 'READY') {
             return <Text>Loading...</Text>;
           }

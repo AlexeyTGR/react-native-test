@@ -4,6 +4,7 @@ import { ActivityIndicator, FlatList, ListRenderItem, Image, Text, View, Keyboar
 import pokemonApi from "../../../api/pokemonApi";
 import { RootStackParamList } from "../../containers/navigation/StackNavigator";
 import PokemonInfoStyles from './PokemonInfo.styles';
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 
 export type PokemonStatsType = {
@@ -47,16 +48,16 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
   useEffect(() => {
     (async () => {
       const result = await pokemonApi.getPokemonInfo(props.route.params?.adress);
-      setTimeout(() => {
-        result.data.sprites.fine = result.data.sprites.other.dream_world.front_default;
-        
-        setPokemon(result.data)
-        setImages([
-          result.data.sprites.front_default, 
-          result.data.sprites.back_default, 
-          result.data.sprites.other.dream_world.front_default,
-        ])
-      }, 1000)
+      // setTimeout(() => {
+      result.data.sprites.fine = result.data.sprites.other.dream_world.front_default;
+
+      setPokemon(result.data)
+      setImages([
+        result.data.sprites.front_default,
+        result.data.sprites.back_default,
+        result.data.sprites.other.dream_world.front_default,
+      ])
+      // }, 1000)
       props.navigation.setOptions({
         title: result.data.name,
       })
@@ -70,8 +71,6 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
       </View>
     );
   };
-
-
 
   const generalInfo: TestType[] = [
     {
@@ -93,16 +92,25 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
       <View style={PokemonInfoStyles.main}>
 
         <View style={PokemonInfoStyles.main}>
-          <Image
-            source={{ uri: pokemon.sprites.front_default }}
-            style={PokemonInfoStyles.img}
+          <SwiperFlatList
+            showPagination
+            // disableGesture={true}
+            data={images}
+            renderItem={(({ item }) => (
+              <View style={PokemonInfoStyles.container}>
+                <Image
+                  source={{ uri: item }}
+                  style={PokemonInfoStyles.img}
+                />
+              </View>
+            ))}
           />
-          <Text style={PokemonInfoStyles.title}>
-            {pokemon.name}
-          </Text>
         </View>
 
         <View style={[PokemonInfoStyles.info, PokemonInfoStyles.main]}>
+          <Text style={PokemonInfoStyles.title}>
+            {pokemon.name}
+          </Text>
           <FlatList
             data={generalInfo}
             renderItem={({ item }) => (
