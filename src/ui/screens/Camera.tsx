@@ -88,6 +88,7 @@ const Camera: React.FC<PropsType> = (props) => {
               </TouchableOpacity>
             </View>
           );
+          // Error in the package's types
         }) as unknown as React.ReactNode}
       </RNCamera>
     </View>
