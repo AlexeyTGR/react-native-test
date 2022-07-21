@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, ListRenderItem, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
-
+import { ActivityIndicator, FlatList, ListRenderItem, SafeAreaView, Text, View } from 'react-native';
+import PokemonItem from './PocCom';
 import pokemonApi from '../../../api/pokemonApi';
 import PokemonsListStyles from './PokemonsList.styles';
 
-type PropsType = {
-  navigation: NativeStackNavigationHelpers;
-}
-
-type AllPokemonsListType = {
+export type AllPokemonsListType = {
   name: string;
   url: string;
   img: string;
@@ -17,17 +12,36 @@ type AllPokemonsListType = {
   features: string[];
 }
 
-const PokemonsList: React.FC<PropsType> = (props) => {
+const renderItem: ListRenderItem<AllPokemonsListType> = ({ item }) => {
+  return <PokemonItem item={item} />
+};
+
+const renderSeparator = () => {
+  return (
+    <View
+      style={PokemonsListStyles.separator}
+    />
+  );
+};
+
+const PokemonsList = () => {
   const [pokemons, setPokemons] = useState<AllPokemonsListType[]>([]);
   const [nextItemsUrl, setNextItemsUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const isSearching = React.useRef(false);
   const getPokemonsList = async (url: string) => {
+
+    if (isSearching.current) {
+      return;
+    }
+    isSearching.current = true;
     try {
       setIsLoading(true);
+
       const result = await pokemonApi.getAllPokemons(url);
 
-      Promise.all<AllPokemonsListType[]>(
+      const updatedPokemons = await Promise.all<AllPokemonsListType[]>(
         result.data.results.map(async (item: AllPokemonsListType) => {
           const response = await pokemonApi.getPokemonInfo(item.url);
           return {
@@ -36,16 +50,17 @@ const PokemonsList: React.FC<PropsType> = (props) => {
             pokemonId: response.data.id,
             features: response.data.types.map((item: any) => item.type.name)
           };
-        })).then((updatedPokemons) => {
-          setPokemons([...pokemons, ...updatedPokemons]);
-          setIsLoading(false);
-        });
+        })
+      );
 
+      setPokemons([...pokemons, ...updatedPokemons]);
       setNextItemsUrl(result.data.next);
     } catch (err) {
-      setIsLoading(false);
       console.log('>>> ERROR >>>', err);
-    };
+    } finally {
+      isSearching.current = false;
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -53,9 +68,7 @@ const PokemonsList: React.FC<PropsType> = (props) => {
   }, []);
 
   const onEndReached = async () => {
-    setIsLoading(true);
     await getPokemonsList(nextItemsUrl);
-    setIsLoading(false);
   };
 
   const renderLoading = () => {
@@ -72,69 +85,19 @@ const PokemonsList: React.FC<PropsType> = (props) => {
     );
   };
 
-  const renderItem: ListRenderItem<AllPokemonsListType> = ({ item }) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          props.navigation.navigate('Pokemon information', { address: item.url });
-        }}
-      >
-        <View
-          style={PokemonsListStyles.container}
-        >
-          <Image
-            source={{ uri: item.img }}
-            style={PokemonsListStyles.tumbnail}
-          />
-
-          <View>
-            <Text style={PokemonsListStyles.item__text}>
-              {item.name}
-            </Text>
-            <Text style={PokemonsListStyles.features}>
-              features:
-            </Text>
-            <FlatList
-              data={item.features}
-              renderItem={({ item }) => (
-                <Text style={PokemonsListStyles.label}>
-                  {item}
-                </Text>
-              )}
-              horizontal
-            />
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderSeparator = () => {
-    return (
-      <View
-        style={PokemonsListStyles.separator}
-      />
-    );
-  };
-
   return (
     <SafeAreaView>
-
       <FlatList
         data={pokemons}
         renderItem={renderItem}
         ItemSeparatorComponent={renderSeparator}
-        ListHeaderComponent={
+        ListHeaderComponent={(
           <Text style={PokemonsListStyles.title}>
             POKEMONS
           </Text>
-        }
-        ListFooterComponent={renderLoading}
-        getItemLayout={(data, index) => (
-          { length: 60, offset: 60 * index, index }
         )}
+        ListFooterComponent={renderLoading}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.3}
       />
     </SafeAreaView>
   );

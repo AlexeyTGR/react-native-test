@@ -40,6 +40,10 @@ const PokemonsListStyles = StyleSheet.create({
     marginTop: 45,
     marginBottom: 5,
   },
+
+  featuresList: {
+    flexDirection: 'row',
+  },
   
   label: {
     backgroundColor: 'lightslategrey',

@@ -7,7 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/types
 import pokemonApi from '../../../api/pokemonApi';
 import { RootStackParamList } from '../../containers/navigation/StackNavigator';
 import PokemonInfoStyles from './PokemonInfo.styles';
-import { ParamListBase, RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 export type PokemonType = {
   name: string;
@@ -41,11 +41,7 @@ type GeneralInfoType = {
   value: number | string;
 }
 
-type RouteProps = RouteProp<ParamListBase> & {
-  params: {
-    address: string;
-  };
-}
+type RouteProps = RouteProp<RootStackParamList, 'Pokemon information'>
 
 const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon information'>> = (props) => {
   const [pokemon, setPokemon] = useState<PokemonType | null>();
@@ -124,7 +120,8 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
     <SafeAreaView style={PokemonInfoStyles.main}>
       <View style={PokemonInfoStyles.main}>
 
-        <View style={PokemonInfoStyles.main}>
+        <View style={PokemonInfoStyles.main}
+        >
           <SwiperFlatList
             showPagination
             onEndReached={() => { }}
