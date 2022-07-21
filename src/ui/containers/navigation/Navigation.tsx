@@ -1,9 +1,10 @@
-import React from "react";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import SignIn from "../../screens/auth/SignIn";
-import Camera from "../../screens/Camera";
-import SomeScreen from "../../screens/SomeScreen";
-import StackNavigator from "./StackNavigator";
+import React from 'react';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+import StackNavigator from './StackNavigator';
+import SignIn from '../../screens/auth/SignIn';
+import Camera from '../../screens/camera';
+import Galery from '../../screens/galery';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -19,7 +20,7 @@ const Navigation = () => {
       <Tab.Screen name="SignIn" component={SignIn}/>
       <Tab.Screen name="Pokemons" component={StackNavigator} />
       <Tab.Screen name="Camera" component={Camera} />
-      <Tab.Screen name="Gallery" key="gallery" component={SomeScreen} />
+      <Tab.Screen name="Gallery" key="gallery" component={Galery} />
 
     </Tab.Navigator>
   )

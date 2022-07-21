@@ -1,5 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
-import { AllPokemonsListType } from '../ui/screens/pokemons/PokemonsList';
+import axios from 'axios';
 
 const getAllPokemons = (url: string) => {
   if (!url) {

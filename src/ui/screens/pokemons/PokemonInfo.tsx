@@ -1,19 +1,13 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack/lib/typescript/src/types";
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, ListRenderItem, Image, Text, View, Keyboard, SafeAreaView } from "react-native";
-import pokemonApi from "../../../api/pokemonApi";
-import { RootStackParamList } from "../../containers/navigation/StackNavigator";
-import PokemonInfoStyles from './PokemonInfo.styles';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, ListRenderItem, Image, Text, View, SafeAreaView } from 'react-native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { SvgUri } from "react-native-svg";
+import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 
-
-export type PokemonStatsType = {
-  base_stat: number;
-  stat: {
-    name: string;
-  };
-}
+import pokemonApi from '../../../api/pokemonApi';
+import { RootStackParamList } from '../../containers/navigation/StackNavigator';
+import PokemonInfoStyles from './PokemonInfo.styles';
+import { ParamListBase, RouteProp, useRoute } from '@react-navigation/native';
 
 export type PokemonType = {
   name: string;
@@ -24,42 +18,55 @@ export type PokemonType = {
     other: {
       dream_world: {
         front_default: string;
-      }
-    }
+      },
+    },
   };
   height: number;
   weight: number;
-  stats: PokemonStatsType[];
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string;
+    };
+  }[];
   types: {
     type: {
       name: string;
-    }
+    },
   }[];
 }
 
-type TestType = {
+type GeneralInfoType = {
   name: string;
   value: number | string;
 }
 
-const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon information'>> = (props: any) => {
+type RouteProps = RouteProp<ParamListBase> & {
+  params: {
+    address: string;
+  };
+}
+
+const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon information'>> = (props) => {
   const [pokemon, setPokemon] = useState<PokemonType | null>();
   const [images, setImages] = useState<string[]>([]);
 
+  const route = useRoute<RouteProps>();
+
   useEffect(() => {
     (async () => {
-      const result = await pokemonApi.getPokemonInfo(props.route.params?.adress);
+      const result = await pokemonApi.getPokemonInfo(route.params.address);
       result.data.sprites.fine = result.data.sprites.other.dream_world.front_default;
 
-      setPokemon(result.data)
+      setPokemon(result.data);
       setImages([
         result.data.sprites.front_default,
         result.data.sprites.back_default,
         result.data.sprites.other.dream_world.front_default,
-      ])
+      ]);
       props.navigation.setOptions({
         title: result.data.name,
-      })
+      });
     })();
   }, [setPokemon]);
 
@@ -70,21 +77,6 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
       </View>
     );
   };
-
-  const generalInfo: TestType[] = [
-    {
-      name: 'height;',
-      value: pokemon.height,
-    },
-    {
-      name: 'weight:',
-      value: pokemon.weight,
-    },
-    {
-      name: 'features:',
-      value: pokemon.types.map(item => item.type.name).join(', '),
-    },
-  ];
 
   const renderItem: ListRenderItem<string> = ({ item }) => {
     let renderImg = (
@@ -103,7 +95,7 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
           style={PokemonInfoStyles.img}
           uri={item}
         />
-      )
+      );
     }
 
     return (
@@ -112,6 +104,21 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
       </View>
     );
   };
+
+  const generalInfo: GeneralInfoType[] = [
+    {
+      name: 'height;',
+      value: pokemon.height,
+    },
+    {
+      name: 'weight:',
+      value: pokemon.weight,
+    },
+    {
+      name: 'features:',
+      value: pokemon.types.map(item => item.type.name).join(', '),
+    },
+  ];
 
   return (
     <SafeAreaView style={PokemonInfoStyles.main}>

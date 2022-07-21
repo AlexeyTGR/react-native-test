@@ -1,6 +1,7 @@
-import { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, ListRenderItem, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
+
 import pokemonApi from '../../../api/pokemonApi';
 import PokemonsListStyles from './PokemonsList.styles';
 
@@ -8,7 +9,7 @@ type PropsType = {
   navigation: NativeStackNavigationHelpers;
 }
 
-export type AllPokemonsListType = {
+type AllPokemonsListType = {
   name: string;
   url: string;
   img: string;
@@ -25,6 +26,7 @@ const PokemonsList: React.FC<PropsType> = (props) => {
     try {
       setIsLoading(true);
       const result = await pokemonApi.getAllPokemons(url);
+
       Promise.all<AllPokemonsListType[]>(
         result.data.results.map(async (item: AllPokemonsListType) => {
           const response = await pokemonApi.getPokemonInfo(item.url);
@@ -33,7 +35,7 @@ const PokemonsList: React.FC<PropsType> = (props) => {
             img: response.data.sprites.front_default,
             pokemonId: response.data.id,
             features: response.data.types.map((item: any) => item.type.name)
-          }
+          };
         })).then((updatedPokemons) => {
           setPokemons([...pokemons, ...updatedPokemons]);
           setIsLoading(false);
@@ -74,7 +76,7 @@ const PokemonsList: React.FC<PropsType> = (props) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          props.navigation.navigate('Pokemon information', { adress: item.url });
+          props.navigation.navigate('Pokemon information', { address: item.url });
         }}
       >
         <View
@@ -99,7 +101,7 @@ const PokemonsList: React.FC<PropsType> = (props) => {
                   {item}
                 </Text>
               )}
-              horizontal={true}
+              horizontal
             />
           </View>
         </View>

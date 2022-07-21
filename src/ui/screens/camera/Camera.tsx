@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, Text, StyleSheet, Image, CameraRoll, ViewProps } from "react-native";
+import React, { useState } from 'react';
+import { View, TouchableOpacity, Text, Image } from 'react-native';
+import { RNCamera, FaCC } from 'react-native-camera';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RNCamera, FaCC } from "react-native-camera";
-import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/src/types";
+import { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
+
+import CameraStyles from './Camera.styles';
 
 type PropsType = {
   navigation: NativeStackNavigationHelpers;
@@ -19,13 +21,13 @@ const Camera: React.FC<PropsType> = (props) => {
       const data = await camera.takePictureAsync(options);
       const filePath = data.uri;
       setLastPhoto(filePath);
-      const updatedPhotos = [...photos, filePath]
+      const updatedPhotos = [...photos, filePath];
       setPhotos(updatedPhotos);
 
-      await AsyncStorage.setItem('GalleryPhotos', JSON.stringify(updatedPhotos))
+      await AsyncStorage.setItem('GalleryPhotos', JSON.stringify(updatedPhotos));
     } catch (error) {
       console.log(error);
-    }
+    };
   };
 
   const changeCameraType = () => {
@@ -33,9 +35,9 @@ const Camera: React.FC<PropsType> = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={CameraStyles.container}>
       <RNCamera
-        style={styles.preview}
+        style={CameraStyles.preview}
         type={isBackCamType ? RNCamera.Constants.Type.back : RNCamera.Constants.Type.front}
         flashMode={RNCamera.Constants.FlashMode.on}
         androidCameraPermissionOptions={{
@@ -50,32 +52,32 @@ const Camera: React.FC<PropsType> = (props) => {
             return <Text>Loading...</Text>;
           }
           return (
-            <View style={styles.buttons}>
+            <View style={CameraStyles.buttons}>
               {lastPhoto ?
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('Gallery')}
-                  style={styles.thumbnail}
+                  style={CameraStyles.thumbnail}
                 >
                   <Image
                     source={{ uri: lastPhoto }}
-                    style={styles.thumbnail}
+                    style={CameraStyles.thumbnail}
                   />
                 </TouchableOpacity>
-                : <View style={styles.thumbnail} />
+                : <View style={CameraStyles.thumbnail} />
               }
 
               <TouchableOpacity
                 onPress={() => takePicture(camera)}
-                style={styles.capture}
+                style={CameraStyles.capture}
               >
-                <View style={styles.snap} />
+                <View style={CameraStyles.snap} />
               </TouchableOpacity>
 
               <TouchableOpacity
                 onPress={changeCameraType}
-                style={styles.capture}
+                style={CameraStyles.capture}
               >
-                <View style={styles.reverse} />
+                <View style={CameraStyles.reverse} />
               </TouchableOpacity>
             </View>
           );
@@ -84,46 +86,6 @@ const Camera: React.FC<PropsType> = (props) => {
       </RNCamera>
     </View>
   )
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'black',
-  },
-
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 50,
-    borderColor: 'grey',
-    borderWidth: 1,
-    padding: 20,
-    alignSelf: 'center',
-    marginVertical: 30,
-  },
-  snap: {
-    width: 20,
-    height: 20,
-  },
-  reverse: {
-    width: 1,
-    height: 1,
-  },
-  thumbnail: {
-    height: 50,
-    width: 50,
-    alignSelf: 'center',
-  },
-});
+};
 
 export default Camera;
