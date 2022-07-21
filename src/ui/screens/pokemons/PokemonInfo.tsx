@@ -5,6 +5,7 @@ import pokemonApi from "../../../api/pokemonApi";
 import { RootStackParamList } from "../../containers/navigation/StackNavigator";
 import PokemonInfoStyles from './PokemonInfo.styles';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { SvgUri } from "react-native-svg";
 
 
 export type PokemonStatsType = {
@@ -48,7 +49,6 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
   useEffect(() => {
     (async () => {
       const result = await pokemonApi.getPokemonInfo(props.route.params?.adress);
-      // setTimeout(() => {
       result.data.sprites.fine = result.data.sprites.other.dream_world.front_default;
 
       setPokemon(result.data)
@@ -57,7 +57,6 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
         result.data.sprites.back_default,
         result.data.sprites.other.dream_world.front_default,
       ])
-      // }, 1000)
       props.navigation.setOptions({
         title: result.data.name,
       })
@@ -78,7 +77,7 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
       value: pokemon.height,
     },
     {
-      name: 'width:',
+      name: 'weight:',
       value: pokemon.weight,
     },
     {
@@ -87,6 +86,33 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
     },
   ];
 
+  const renderItem: ListRenderItem<string> = ({ item }) => {
+    let renderImg = (
+      <Image
+        source={{ uri: item }}
+        style={PokemonInfoStyles.img}
+      />
+    );
+
+    const imgFormat = item.slice(-3).toLowerCase();
+    if (imgFormat === 'svg') {
+      renderImg = (
+        <SvgUri
+          width={PokemonInfoStyles.img.width}
+          height={PokemonInfoStyles.img.height}
+          style={PokemonInfoStyles.img}
+          uri={item}
+        />
+      )
+    }
+
+    return (
+      <View style={PokemonInfoStyles.container}>
+        {renderImg}
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={PokemonInfoStyles.main}>
       <View style={PokemonInfoStyles.main}>
@@ -94,16 +120,9 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
         <View style={PokemonInfoStyles.main}>
           <SwiperFlatList
             showPagination
-            // disableGesture={true}
+            onEndReached={() => { }}
             data={images}
-            renderItem={(({ item }) => (
-              <View style={PokemonInfoStyles.container}>
-                <Image
-                  source={{ uri: item }}
-                  style={PokemonInfoStyles.img}
-                />
-              </View>
-            ))}
+            renderItem={renderItem}
           />
         </View>
 
