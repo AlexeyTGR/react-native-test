@@ -44,7 +44,7 @@ type GeneralInfoType = {
 
 type RouteProps = RouteProp<RootStackParamList, 'Pokemon information'>
 
-const listHeaderComponent = () => {
+const ListHeaderComponent = () => {
   return <GamepadSVG width={48} height={48} fill="#000" style={PokemonInfoStyles.stats__header} />
 }
 
@@ -161,7 +161,7 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
                 </Text>
               </View>
             )}
-            ListHeaderComponent={listHeaderComponent}
+            ListHeaderComponent={ListHeaderComponent}
           />
         </View>
       </View>

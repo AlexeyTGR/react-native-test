@@ -1,4 +1,4 @@
-import React, { memo }  from 'react';
+import React, { memo } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AllPokemonsListType } from './PokemonsList';
 import { RootStackParamList } from '../../containers/navigation/StackNavigator';
 import PokemonsListStyles from './PokemonsList.styles';
+import CustomText from '../../components/CustomTextComp';
 
 type Props = {
   item: AllPokemonsListType
@@ -30,20 +31,21 @@ const PokemonItem: React.FC<Props> = ({ item }) => {
         />
 
         <View>
-          <Text style={PokemonsListStyles.item__text}>
-            {item.name}
-          </Text>
-          <Text style={PokemonsListStyles.features}>
-            features:
-          </Text>
+          <CustomText 
+          style={PokemonsListStyles.item__text}
+          children={item.name}
+          />
+          <CustomText
+            style={PokemonsListStyles.features}
+            children='features:'
+          />
           <View style={PokemonsListStyles.featuresList}>
             {item.features.map((item, index) => (
-              <Text
+              <CustomText
                 style={PokemonsListStyles.label}
                 key={index}
-              >
-                {item}
-              </Text>
+                children={item}
+              />
             ))}
           </View>
         </View>

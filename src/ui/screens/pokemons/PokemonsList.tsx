@@ -3,6 +3,7 @@ import { ActivityIndicator, FlatList, ListRenderItem, SafeAreaView, Text, View }
 import PokemonItem from './PokemonItem';
 import pokemonApi from '../../../api/pokemonApi';
 import PokemonsListStyles from './PokemonsList.styles';
+import CustomText from '../../components/CustomTextComp';
 
 export type AllPokemonsListType = {
   name: string;
@@ -92,9 +93,10 @@ const PokemonsList = () => {
         renderItem={renderItem}
         ItemSeparatorComponent={renderSeparator}
         ListHeaderComponent={(
-          <Text style={PokemonsListStyles.title}>
-            POKEMONS
-          </Text>
+          <CustomText 
+            style={PokemonsListStyles.title}
+            children='POKEMONS'
+          />
         )}
         ListFooterComponent={renderLoading}
         onEndReached={onEndReached}
