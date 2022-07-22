@@ -8,7 +8,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/types
 import pokemonApi from '../../../api/pokemonApi';
 import { RootStackParamList } from '../../containers/navigation/StackNavigator';
 import PokemonInfoStyles from './PokemonInfo.styles';
-import GamepadSVG from '../../images/gamepad.svg'
+import GamepadSVG from '../../assets/images/gamepad.svg'
 
 export type PokemonType = {
   name: string;

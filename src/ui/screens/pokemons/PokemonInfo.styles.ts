@@ -20,7 +20,9 @@ const PokemonInfoStyles = StyleSheet.create({
   },
 
   title: {
+    fontFamily: 'MochiyPopOne-Regular',
     fontSize: 20,
+    textTransform: 'capitalize',
     alignSelf: 'center',
   },
 

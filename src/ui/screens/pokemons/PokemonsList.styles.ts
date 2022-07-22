@@ -12,9 +12,10 @@ const PokemonsListStyles = StyleSheet.create({
   },
 
   item__text: {
-    paddingTop: 10,
+    fontFamily: 'MochiyPopOne-Regular',
     fontSize: 22,
     textTransform: 'capitalize',
+    paddingTop: 10,
   },
 
   loader: {

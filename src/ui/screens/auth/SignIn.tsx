@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TextInput, TouchableWithoutFeedback } from 'react-native';
 
 import signInStyles from './SignIn.styles';
-import images from '../../images';
+import images from '../../assets/images';
 
 const SignIn = () => {
   return (
