@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import StackNavigator from './StackNavigator';
 import SignIn from '../../screens/auth/SignIn';
@@ -16,14 +16,13 @@ const Navigation = () => {
       screenOptions={{
         tabBarShowLabel: false,
       }}
-    >
-      <Tab.Screen name="SignIn" component={SignIn}/>
+>
+      <Tab.Screen name="SignIn" component={SignIn} />
       <Tab.Screen name="Pokemons" component={StackNavigator} />
       <Tab.Screen name="Camera" component={Camera} />
       <Tab.Screen name="Gallery" key="gallery" component={Galery} />
-
     </Tab.Navigator>
-  )
-}
+  );
+};
 
 export default Navigation;

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const signInStyles = StyleSheet.create({
   main: {
@@ -25,7 +25,7 @@ const signInStyles = StyleSheet.create({
     paddingVertical: 0,
     marginVertical: 10,
   },
-  
+
   forgotPassword: {
     marginTop: 5,
     textAlign: 'right',
@@ -38,7 +38,7 @@ const signInStyles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'grey',
   },
-  
+
   button__content: {
     color: 'white',
     textAlign: 'center',

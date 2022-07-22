@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, TextProps } from 'react-native';
+import type {TextProps} from 'react-native';
+import {Text} from 'react-native';
 
 const CustomText: React.FC<TextProps> = (props) => {
   return (
     <Text
       {...props}
-      style={[{ fontFamily: 'MochiyPopOne-Regular' }, props.style]}
+      style={[{fontFamily: 'MochiyPopOne-Regular'}, props.style]}
     />
   );
 };

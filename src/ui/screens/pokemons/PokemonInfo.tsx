@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, ListRenderItem, Image, Text, View, SafeAreaView } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import type { ListRenderItem } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Text, View, SafeAreaView } from 'react-native';
+import type { RouteProp } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
-import { SvgUri } from "react-native-svg";
-import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/typescript/src/types';
+import { SvgUri } from 'react-native-svg';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 
 import pokemonApi from '../../../api/pokemonApi';
-import { RootStackParamList } from '../../containers/navigation/StackNavigator';
+import type { RootStackParamList } from '../../containers/navigation/StackNavigator';
 import PokemonInfoStyles from './PokemonInfo.styles';
-import GamepadSVG from '../../assets/images/gamepad.svg'
+import GamepadSVG from '../../assets/images/gamepad.svg';
 
 export type PokemonType = {
   name: string;
@@ -19,8 +21,8 @@ export type PokemonType = {
     other: {
       dream_world: {
         front_default: string;
-      },
-    },
+      };
+    };
   };
   height: number;
   weight: number;
@@ -33,31 +35,41 @@ export type PokemonType = {
   types: {
     type: {
       name: string;
-    },
+    };
   }[];
-}
+};
 
 type GeneralInfoType = {
   name: string;
   value: number | string;
-}
+};
 
-type RouteProps = RouteProp<RootStackParamList, 'Pokemon information'>
+type RoutePropsType = RouteProp<RootStackParamList, 'Pokemon information'>;
 
 const ListHeaderComponent = () => {
-  return <GamepadSVG width={48} height={48} fill="#000" style={PokemonInfoStyles.stats__header} />
-}
+  return (
+    <GamepadSVG
+      width={48}
+      height={48}
+      fill="#000"
+      style={PokemonInfoStyles.stats__header}
+    />
+  );
+};
 
-const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon information'>> = (props) => {
+const PokemonInfo: React.FC<
+  NativeStackScreenProps<RootStackParamList, 'Pokemon information'>
+> = (props) => {
   const [pokemon, setPokemon] = useState<PokemonType | null>();
   const [images, setImages] = useState<string[]>([]);
 
-  const route = useRoute<RouteProps>();
+  const route = useRoute<RoutePropsType>();
 
   useEffect(() => {
     (async () => {
       const result = await pokemonApi.getPokemonInfo(route.params.address);
-      result.data.sprites.fine = result.data.sprites.other.dream_world.front_default;
+      result.data.sprites.fine =
+        result.data.sprites.other.dream_world.front_default;
 
       setPokemon(result.data);
       setImages([
@@ -77,14 +89,11 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
         <ActivityIndicator animating size="large" />
       </View>
     );
-  };
+  }
 
   const renderItem: ListRenderItem<string> = ({ item }) => {
     let renderImg = (
-      <Image
-        source={{ uri: item }}
-        style={PokemonInfoStyles.img}
-      />
+      <Image source={{ uri: item }} style={PokemonInfoStyles.img} />
     );
 
     const imgFormat = item.slice(-3).toLowerCase();
@@ -99,11 +108,7 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
       );
     }
 
-    return (
-      <View style={PokemonInfoStyles.container}>
-        {renderImg}
-      </View>
-    );
+    return <View style={PokemonInfoStyles.container}>{renderImg}</View>;
   };
 
   const generalInfo: GeneralInfoType[] = [
@@ -117,16 +122,14 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
     },
     {
       name: 'features:',
-      value: pokemon.types.map(item => item.type.name).join(', '),
+      value: pokemon.types.map((item) => item.type.name).join(', '),
     },
   ];
 
   return (
     <SafeAreaView style={PokemonInfoStyles.main}>
       <View style={PokemonInfoStyles.main}>
-
-        <View style={PokemonInfoStyles.main}
-        >
+        <View style={PokemonInfoStyles.main}>
           <SwiperFlatList
             showPagination
             onEndReached={() => { }}
@@ -136,9 +139,7 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
         </View>
 
         <View style={[PokemonInfoStyles.info, PokemonInfoStyles.main]}>
-          <Text style={PokemonInfoStyles.title}>
-            {pokemon.name}
-          </Text>
+          <Text style={PokemonInfoStyles.title}>{pokemon.name}</Text>
           <FlatList
             data={generalInfo}
             renderItem={({ item }) => (
@@ -153,9 +154,7 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
             data={pokemon.stats}
             renderItem={({ item }) => (
               <View style={PokemonInfoStyles.stats}>
-                <Text>
-                  {item.stat.name}:
-                </Text>
+                <Text>{item.stat.name}:</Text>
                 <Text style={PokemonInfoStyles.stats__value}>
                   {item.base_stat}
                 </Text>

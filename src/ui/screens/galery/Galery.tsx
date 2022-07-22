@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState } from 'react';
-import { FlatList, Image, ListRenderItem, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, {useState} from 'react';
+import type {ListRenderItem} from 'react-native';
+import {FlatList, Image, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import GaleryStyles from './Galery.styles';
 
 const Galery = () => {
@@ -16,23 +17,19 @@ const Galery = () => {
       }
     } catch (e) {
       console.log('getData error >', e);
-    };
+    }
   })();
 
-  const renderImg: ListRenderItem<string> = ({ item }) => {
+  const renderImg: ListRenderItem<string> = ({item}) => {
     return (
       <View style={GaleryStyles.container}>
-        <Image source={{ uri: item }} style={GaleryStyles.img} />
+        <Image source={{uri: item}} style={GaleryStyles.img} />
       </View>
     );
   };
 
   const renderSeparator = () => {
-    return (
-      <View
-        style={GaleryStyles.separator}
-      />
-    );
+    return <View style={GaleryStyles.separator} />;
   };
 
   return (

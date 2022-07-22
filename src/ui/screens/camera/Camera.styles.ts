@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const CameraStyles = StyleSheet.create({
   container: {
@@ -13,7 +13,7 @@ const CameraStyles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   capture: {
     flex: 0,

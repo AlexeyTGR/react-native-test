@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const PokemonsListStyles = StyleSheet.create({
   container: {
@@ -22,7 +22,7 @@ const PokemonsListStyles = StyleSheet.create({
     height: 120,
     paddingVertical: 30,
     borderTopWidth: 1,
-    borderColor: "#CED0CE"
+    borderColor: '#CED0CE',
   },
 
   tumbnail: {
@@ -45,7 +45,7 @@ const PokemonsListStyles = StyleSheet.create({
   featuresList: {
     flexDirection: 'row',
   },
-  
+
   label: {
     backgroundColor: 'lightslategrey',
     textAlign: 'center',
@@ -53,7 +53,7 @@ const PokemonsListStyles = StyleSheet.create({
     width: 60,
     height: 23,
     marginRight: 10,
-  }
+  },
 });
 
 export default PokemonsListStyles;

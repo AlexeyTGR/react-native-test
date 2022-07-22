@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, ListRenderItem, SafeAreaView, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import type {ListRenderItem} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  SafeAreaView,
+  Text,
+  View,
+} from 'react-native';
 import PokemonItem from './PokemonItem';
 import pokemonApi from '../../../api/pokemonApi';
 import PokemonsListStyles from './PokemonsList.styles';
@@ -11,18 +18,14 @@ export type AllPokemonsListType = {
   img: string;
   pokemonId: number;
   features: string[];
-}
+};
 
-const renderItem: ListRenderItem<AllPokemonsListType> = ({ item }) => {
-  return <PokemonItem item={item} />
+const renderItem: ListRenderItem<AllPokemonsListType> = ({item}) => {
+  return <PokemonItem item={item} />;
 };
 
 const renderSeparator = () => {
-  return (
-    <View
-      style={PokemonsListStyles.separator}
-    />
-  );
+  return <View style={PokemonsListStyles.separator} />;
 };
 
 const PokemonsList = () => {
@@ -32,7 +35,6 @@ const PokemonsList = () => {
 
   const isSearching = React.useRef(false);
   const getPokemonsList = async (url: string) => {
-
     if (isSearching.current) {
       return;
     }
@@ -49,9 +51,9 @@ const PokemonsList = () => {
             ...item,
             img: response.data.sprites.front_default,
             pokemonId: response.data.id,
-            features: response.data.types.map((item: any) => item.type.name)
+            features: response.data.types.map((item: any) => item.type.name),
           };
-        })
+        }),
       );
 
       setPokemons([...pokemons, ...updatedPokemons]);
@@ -74,13 +76,11 @@ const PokemonsList = () => {
 
   const renderLoading = () => {
     if (!isLoading) {
-      return null
+      return null;
     }
 
     return (
-      <View
-        style={PokemonsListStyles.loader}
-      >
+      <View style={PokemonsListStyles.loader}>
         <ActivityIndicator animating size="large" />
       </View>
     );
@@ -92,12 +92,9 @@ const PokemonsList = () => {
         data={pokemons}
         renderItem={renderItem}
         ItemSeparatorComponent={renderSeparator}
-        ListHeaderComponent={(
-          <CustomText 
-            style={PokemonsListStyles.title}
-            children='POKEMONS'
-          />
-        )}
+        ListHeaderComponent={
+          <CustomText style={PokemonsListStyles.title} children="POKEMONS" />
+        }
         ListFooterComponent={renderLoading}
         onEndReached={onEndReached}
       />

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const GaleryStyles = StyleSheet.create({
   container: {
@@ -14,6 +14,6 @@ const GaleryStyles = StyleSheet.create({
     height: 10,
     backgroundColor: '#CED0CE',
   },
-})
+});
 
 export default GaleryStyles;
