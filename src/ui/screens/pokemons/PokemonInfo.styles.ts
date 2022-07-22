@@ -39,7 +39,7 @@ const PokemonInfoStyles = StyleSheet.create({
   },
 
   stats__header: {
-    textAlign: 'center',
+    alignSelf: 'center',
   },
 
   loader: {

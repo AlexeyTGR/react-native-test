@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, ListRenderItem, Image, Text, View, SafeAreaView } from 'react-native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { SvgUri } from "react-native-svg";
 import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/typescript/src/types';
@@ -7,7 +8,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/types
 import pokemonApi from '../../../api/pokemonApi';
 import { RootStackParamList } from '../../containers/navigation/StackNavigator';
 import PokemonInfoStyles from './PokemonInfo.styles';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import GamepadSVG from '../../images/gamepad.svg'
 
 export type PokemonType = {
   name: string;
@@ -42,6 +43,10 @@ type GeneralInfoType = {
 }
 
 type RouteProps = RouteProp<RootStackParamList, 'Pokemon information'>
+
+const listHeaderComponent = () => {
+  return <GamepadSVG width={48} height={48} fill="#000" style={PokemonInfoStyles.stats__header} />
+}
 
 const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon information'>> = (props) => {
   const [pokemon, setPokemon] = useState<PokemonType | null>();
@@ -156,11 +161,7 @@ const PokemonInfo: React.FC<NativeStackScreenProps<RootStackParamList, 'Pokemon 
                 </Text>
               </View>
             )}
-            ListHeaderComponent={(
-              <Text style={PokemonInfoStyles.stats__header}>
-                Stats:
-              </Text>
-            )}
+            ListHeaderComponent={listHeaderComponent}
           />
         </View>
       </View>
