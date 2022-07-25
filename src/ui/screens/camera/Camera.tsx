@@ -7,15 +7,17 @@ import type { NativeStackNavigationHelpers } from '@react-navigation/native-stac
 
 import CameraStyles from './Camera.styles';
 import CustomText from '../../components/CustomTextComp';
+import { useAppDispatch } from '../../../store';
+import { setImages } from '../../../store/galeryReducers';
 
 type PropsType = {
   navigation: NativeStackNavigationHelpers;
 };
 
 const Camera: React.FC<PropsType> = (props) => {
-  const [photos, setPhotos] = useState<string[]>([]);
   const [lastPhoto, setLastPhoto] = useState<string>('');
   const [isBackCamType, setIsBackCamType] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
 
   const takePicture = async (camera: RNCamera) => {
     try {
@@ -23,13 +25,8 @@ const Camera: React.FC<PropsType> = (props) => {
       const data = await camera.takePictureAsync(options);
       const filePath = data.uri;
       setLastPhoto(filePath);
-      const updatedPhotos = [...photos, filePath];
-      setPhotos(updatedPhotos);
 
-      await AsyncStorage.setItem(
-        'GalleryPhotos',
-        JSON.stringify(updatedPhotos),
-      );
+      dispatch(setImages(filePath));
     } catch (error) {
       console.log(error);
     }

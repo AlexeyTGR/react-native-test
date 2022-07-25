@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { ListRenderItem } from 'react-native';
-import {
-  ActivityIndicator,
-  FlatList,
-  SafeAreaView,
-  View,
-} from 'react-native';
+import { ActivityIndicator, FlatList, SafeAreaView, View } from 'react-native';
 import PokemonItem from './PokemonItem';
 import pokemonApi from '../../../api/pokemonApi';
 import PokemonsListStyles from './PokemonsList.styles';
