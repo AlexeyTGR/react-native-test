@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { View, Image, TextInput, TouchableWithoutFeedback } from 'react-native';
 
 import signInStyles from './SignIn.styles';
 import images from '../../assets/images';
+import CustomText from '../../components/CustomTextComp';
 
 const SignIn = () => {
   return (
@@ -19,12 +14,16 @@ const SignIn = () => {
         <TextInput placeholder="PASSWORD" style={signInStyles.input} />
         <TouchableWithoutFeedback
           onPress={() => console.log('handle password reset')}
->
-          <Text style={signInStyles.forgotPassword}>FORGOT PASSWORD</Text>
+        >
+          <CustomText style={signInStyles.forgotPassword}>
+            FORGOT PASSWORD
+          </CustomText>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => console.log('handle sign in')}>
           <View style={signInStyles.button}>
-            <Text style={signInStyles.button__content}>SIGN IN</Text>
+            <CustomText style={signInStyles.button__content}>
+              SIGN IN
+            </CustomText>
           </View>
         </TouchableWithoutFeedback>
       </View>

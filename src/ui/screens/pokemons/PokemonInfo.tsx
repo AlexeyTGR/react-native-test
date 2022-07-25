@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { ListRenderItem } from 'react-native';
-import { ActivityIndicator, FlatList, Image, Text, View, SafeAreaView } from 'react-native';
+import { ActivityIndicator, FlatList, Image, View, SafeAreaView } from 'react-native';
 import type { RouteProp } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
@@ -8,9 +8,10 @@ import { SvgUri } from 'react-native-svg';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 
 import pokemonApi from '../../../api/pokemonApi';
-import type { RootStackParamList } from '../../containers/navigation/StackNavigator';
+import type { RootStackParamListType } from '../../containers/navigation/StackNavigator';
 import PokemonInfoStyles from './PokemonInfo.styles';
 import GamepadSVG from '../../assets/images/gamepad.svg';
+import CustomText from '../../components/CustomTextComp';
 
 export type PokemonType = {
   name: string;
@@ -44,7 +45,7 @@ type GeneralInfoType = {
   value: number | string;
 };
 
-type RoutePropsType = RouteProp<RootStackParamList, 'Pokemon information'>;
+type RoutePropsType = RouteProp<RootStackParamListType, 'Pokemon information'>;
 
 const ListHeaderComponent = () => {
   return (
@@ -58,7 +59,7 @@ const ListHeaderComponent = () => {
 };
 
 const PokemonInfo: React.FC<
-  NativeStackScreenProps<RootStackParamList, 'Pokemon information'>
+  NativeStackScreenProps<RootStackParamListType, 'Pokemon information'>
 > = (props) => {
   const [pokemon, setPokemon] = useState<PokemonType | null>();
   const [images, setImages] = useState<string[]>([]);
@@ -81,7 +82,7 @@ const PokemonInfo: React.FC<
         title: result.data.name,
       });
     })();
-  }, [setPokemon]);
+  }, [props.navigation, route.params.address, setPokemon]);
 
   if (!pokemon) {
     return (
@@ -132,20 +133,26 @@ const PokemonInfo: React.FC<
         <View style={PokemonInfoStyles.main}>
           <SwiperFlatList
             showPagination
-            onEndReached={() => { }}
+            onEndReached={() => { }} // eslint-disable-line @typescript-eslint/no-empty-function
             data={images}
             renderItem={renderItem}
           />
         </View>
 
         <View style={[PokemonInfoStyles.info, PokemonInfoStyles.main]}>
-          <Text style={PokemonInfoStyles.title}>{pokemon.name}</Text>
+          <CustomText style={PokemonInfoStyles.title}>
+            {pokemon.name}
+          </CustomText>
           <FlatList
             data={generalInfo}
             renderItem={({ item }) => (
               <View style={PokemonInfoStyles.stats}>
-                <Text>{item.name}</Text>
-                <Text style={PokemonInfoStyles.stats__value}>{item.value}</Text>
+                <CustomText>
+                  {item.name}
+                </CustomText>
+                <CustomText style={PokemonInfoStyles.stats__value}>
+                {item.value}
+                </CustomText>
               </View>
             )}
           />
@@ -154,10 +161,12 @@ const PokemonInfo: React.FC<
             data={pokemon.stats}
             renderItem={({ item }) => (
               <View style={PokemonInfoStyles.stats}>
-                <Text>{item.stat.name}:</Text>
-                <Text style={PokemonInfoStyles.stats__value}>
-                  {item.base_stat}
-                </Text>
+                <CustomText>
+                  {`${item.stat.name}:`}
+                </CustomText>
+                <CustomText style={PokemonInfoStyles.stats__value}>
+                {item.base_stat}
+                </CustomText>
               </View>
             )}
             ListHeaderComponent={ListHeaderComponent}

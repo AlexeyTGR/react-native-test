@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const dimensions = Dimensions.get('window');
 const imageWidth = dimensions.width;
@@ -20,7 +20,6 @@ const PokemonInfoStyles = StyleSheet.create({
   },
 
   title: {
-    fontFamily: 'MochiyPopOne-Regular',
     fontSize: 20,
     textTransform: 'capitalize',
     alignSelf: 'center',

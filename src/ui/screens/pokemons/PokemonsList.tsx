@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import type {ListRenderItem} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import type { ListRenderItem } from 'react-native';
 import {
   ActivityIndicator,
   FlatList,
   SafeAreaView,
-  Text,
   View,
 } from 'react-native';
 import PokemonItem from './PokemonItem';
@@ -20,7 +19,14 @@ export type AllPokemonsListType = {
   features: string[];
 };
 
-const renderItem: ListRenderItem<AllPokemonsListType> = ({item}) => {
+type PokemonsFeaturesType = {
+  type: {
+    name: string;
+    url: string;
+  };
+};
+
+const renderItem: ListRenderItem<AllPokemonsListType> = ({ item }) => {
   return <PokemonItem item={item} />;
 };
 
@@ -51,7 +57,7 @@ const PokemonsList = () => {
             ...item,
             img: response.data.sprites.front_default,
             pokemonId: response.data.id,
-            features: response.data.types.map((item: any) => item.type.name),
+            features: response.data.types.map((item: PokemonsFeaturesType) => item.type.name),
           };
         }),
       );
@@ -68,7 +74,7 @@ const PokemonsList = () => {
 
   useEffect(() => {
     getPokemonsList('');
-  }, []);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const onEndReached = async () => {
     await getPokemonsList(nextItemsUrl);
@@ -93,7 +99,9 @@ const PokemonsList = () => {
         renderItem={renderItem}
         ItemSeparatorComponent={renderSeparator}
         ListHeaderComponent={
-          <CustomText style={PokemonsListStyles.title} children="POKEMONS" />
+          (<CustomText style={PokemonsListStyles.title}>
+            POKEMONS
+           </CustomText>)
         }
         ListFooterComponent={renderLoading}
         onEndReached={onEndReached}

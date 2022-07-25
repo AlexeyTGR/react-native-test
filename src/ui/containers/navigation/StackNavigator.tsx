@@ -1,17 +1,17 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PokemonInfo from '../../screens/pokemons/PokemonInfo';
 import PokemonsList from '../../screens/pokemons/PokemonsList';
 
-export type RootStackParamList = {
+export type RootStackParamListType = {
   'Pokemon information': {
     address: string;
   };
   'Pokemons list': undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamListType>();
 
 const StackNavigator = () => {
   return (
@@ -19,12 +19,12 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Pokemons list"
         component={PokemonsList}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Pokemon information"
         component={PokemonInfo}
-        options={{title: '...'}}
+        options={{ title: '...' }}
       />
     </Stack.Navigator>
   );
