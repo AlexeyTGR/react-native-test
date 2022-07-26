@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import StackNavigator from './StackNavigator';
 import SignIn from '../../screens/auth/SignIn';
 import Camera from '../../screens/camera';
-import Galery from '../../screens/galery';
+import Gallery from '../../screens/gallery/Gallery';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -20,7 +20,7 @@ const Navigation = () => {
       <Tab.Screen name="SignIn" component={SignIn} />
       <Tab.Screen name="Pokemons" component={StackNavigator} />
       <Tab.Screen name="Camera" component={Camera} />
-      <Tab.Screen name="Gallery" key="gallery" component={Galery} />
+      <Tab.Screen name="Gallery" key="gallery" component={Gallery} />
     </Tab.Navigator>
   );
 };

@@ -6,11 +6,11 @@ import { FlatList, Image, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppSelector } from '../../../store';
 import CustomText from '../../components/CustomTextComp';
-import GaleryStyles from './Galery.styles';
+import GalleryStyles from './Gallery.styles';
 
 const Galery = () => {
   const [img, setImg] = useState<string[]>();
-  const images = useAppSelector((state) => state.galeryReducer.images);
+  const images = useAppSelector((state) => state.galleryReducer.images);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -21,17 +21,17 @@ const Galery = () => {
 
   const renderImg: ListRenderItem<string> = ({ item }) => {
     return (
-      <View style={GaleryStyles.container}>
+      <View style={GalleryStyles.container}>
         <Image
           source={{ uri: item }}
-          style={GaleryStyles.img}
+          style={GalleryStyles.img}
         />
       </View>
     );
   };
 
   const renderSeparator = () => {
-    return <View style={GaleryStyles.separator} />;
+    return <View style={GalleryStyles.separator} />;
   };
 
   return (

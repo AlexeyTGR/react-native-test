@@ -8,7 +8,7 @@ import type { NativeStackNavigationHelpers } from '@react-navigation/native-stac
 import CameraStyles from './Camera.styles';
 import CustomText from '../../components/CustomTextComp';
 import { useAppDispatch } from '../../../store';
-import { setImages } from '../../../store/galeryReducers';
+import { setImages } from '../../../store/galleryReducers';
 
 type PropsType = {
   navigation: NativeStackNavigationHelpers;

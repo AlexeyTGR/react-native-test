@@ -7,5 +7,6 @@
     "moduleResolution": "node",
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "esModuleInterop": true,
+    "noImplicitAny": true,
   }
 }

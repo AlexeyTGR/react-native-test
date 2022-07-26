@@ -1,17 +1,17 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-type GaleryStateType = {
+type GalleryStateType = {
     images: string[] | [];
 };
 
-const initialState: GaleryStateType = {
+const initialState: GalleryStateType = {
     images: [],
 };
 
-const galeryReducer = createSlice({
+const galleryReducer = createSlice({
     initialState,
-    name: 'galery',
+    name: 'gallery',
     reducers: {
         setImages: (state, action: PayloadAction<string>) => {
             state.images.splice(0, 0, action.payload);
@@ -19,6 +19,6 @@ const galeryReducer = createSlice({
     },
 });
 
-export const { setImages } = galeryReducer.actions;
+export const { setImages } = galleryReducer.actions;
 
-export default galeryReducer.reducer;
+export default galleryReducer.reducer;

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const GaleryStyles = StyleSheet.create({
+const GalleryStyles = StyleSheet.create({
   container: {
     alignSelf: 'center',
   },
@@ -16,4 +16,4 @@ const GaleryStyles = StyleSheet.create({
   },
 });
 
-export default GaleryStyles;
+export default GalleryStyles;
