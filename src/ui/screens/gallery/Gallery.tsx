@@ -1,5 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import type { ListRenderItem } from 'react-native';
 import { FlatList, Image, View } from 'react-native';
@@ -11,13 +9,12 @@ import GalleryStyles from './Gallery.styles';
 const Galery = () => {
   const [img, setImg] = useState<string[]>();
   const images = useAppSelector((state) => state.galleryReducer.images);
-  const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused && images.length > 0) {
+    if (images.length > 0) {
       setImg(images);
     }
-  }, [images, isFocused]);
+  }, [images]);
 
   const renderImg: ListRenderItem<string> = ({ item }) => {
     return (
@@ -42,7 +39,7 @@ const Galery = () => {
           renderItem={renderImg}
           ItemSeparatorComponent={renderSeparator}
         />)
-        : <CustomText>Loading...</CustomText>}
+        : <CustomText>No photo yet...</CustomText>}
     </SafeAreaView>
   );
 };

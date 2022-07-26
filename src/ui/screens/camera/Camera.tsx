@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import type { FaCC } from 'react-native-camera';
 import { RNCamera } from 'react-native-camera';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
 
 import CameraStyles from './Camera.styles';
