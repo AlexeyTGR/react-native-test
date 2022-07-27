@@ -1,16 +1,38 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, PermissionsAndroid, Platform } from 'react-native';
 import type { FaCC } from 'react-native-camera';
 import { RNCamera } from 'react-native-camera';
 import type { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
 
+import CameraRoll from '@react-native-community/cameraroll';
 import CameraStyles from './Camera.styles';
 import CustomText from '../../components/CustomTextComp';
 import { useAppDispatch } from '../../../store';
 import { setImages } from '../../../store/galleryReducers';
 
+
 type PropsType = {
   navigation: NativeStackNavigationHelpers;
+};
+
+const hasAndroidPermission = async () => {
+  const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+
+  const hasPermission = await PermissionsAndroid.check(permission);
+  if (hasPermission) {
+    return true;
+  }
+
+  const status = await PermissionsAndroid.request(permission);
+  return status === 'granted';
+};
+
+const savePicture = async (tag: string, type: 'photo' | 'video', album: string) => {
+  if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+    return;
+  }
+
+  CameraRoll.save(tag, { type, album });
 };
 
 const Camera: React.FC<PropsType> = (props) => {
@@ -26,6 +48,8 @@ const Camera: React.FC<PropsType> = (props) => {
       setLastPhoto(filePath);
 
       dispatch(setImages(filePath));
+
+      await savePicture(filePath, 'photo', 'My React Native test app');
     } catch (error) {
       console.log(error);
     }
