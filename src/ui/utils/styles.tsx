@@ -28,6 +28,7 @@ export const useTheme = (currentTheme: boolean) => {
 	return theme;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createStyleSheet = (currentTheme: ThemeType, shape: (a: ThemeType) => StyleSheet.NamedStyles<any>) => {
 	const themedShape = shape(currentTheme);
 	return StyleSheet.create(themedShape);
@@ -59,13 +60,13 @@ const Test = () => {
 	return (
 		<View style={stylesTest.main}>
 			<View
-				style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}
+				style={switchStyles.container}
 			>
-				<CustomText style={stylesTest.text}>
+				<CustomText style={switchStyles.text}>
 					Tomato theme
 				</CustomText>
 				<Switch
-					style={{ marginLeft: 20 }}
+					style={switchStyles.switch}
 					trackColor={{ false: '#767577', true: 'grey' }}
 					thumbColor={'white'}
 					ios_backgroundColor="#3e3e3e"
@@ -79,3 +80,17 @@ const Test = () => {
 };
 
 export default Test;
+
+const switchStyles = StyleSheet.create({
+	container: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+	},
+	text: {
+		marginLeft: 20,
+	},
+	switch: {
+		marginLeft: 20,
+	},
+});

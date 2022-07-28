@@ -5,7 +5,7 @@ import StackNavigator from './StackNavigator';
 import SignIn from '../../screens/auth/SignIn';
 import Camera from '../../screens/camera';
 import Gallery from '../../screens/gallery/Gallery';
-import Component from '../../screens/useThemeExample';
+import BottomTabNavigator from './TabNavigator';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -19,7 +19,7 @@ const Navigation = () => {
       }}
     >
       <Tab.Screen name="SignIn" component={SignIn} />
-      <Tab.Screen name="Test" component={Component} />
+      <Tab.Screen name="Test" component={BottomTabNavigator} />
       <Tab.Screen name="Pokemons" component={StackNavigator} />
       <Tab.Screen name="Camera" component={Camera} />
       <Tab.Screen name="Gallery" key="gallery" component={Gallery} />

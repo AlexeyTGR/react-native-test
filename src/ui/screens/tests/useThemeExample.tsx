@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, StyleSheet, View, Switch } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { setTheme } from '../../store/themeReducer';
-import CustomText from '../components/CustomTextComp';
+import { StyleSheet, View, Switch } from 'react-native';
+import { useAppDispatch, useAppSelector } from '../../../store';
+import { setTheme } from '../../../store/themeReducer';
+import CustomText from '../../components/CustomTextComp';
 
 export type ThemeType = {
   backgroundColor: string;
@@ -78,11 +78,6 @@ const Component = () => {
           value={isDarkTheme}
         />
       </View>
-      <Text
-        style={styles.text}
-      >
-        TEST TEST TEST
-      </Text>
     </View>
   );
 };
