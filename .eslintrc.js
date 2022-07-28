@@ -87,7 +87,7 @@ module.exports = {
       files: ['*.tsx'],
       rules: {
         '@typescript-eslint/comma-dangle': ['error', {
-          generics: 'always',
+          generics: 'always-multiline',
           enums: 'always-multiline',
           tuples: 'always-multiline',
           arrays: 'always-multiline',

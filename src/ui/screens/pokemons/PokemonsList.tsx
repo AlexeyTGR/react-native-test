@@ -93,15 +93,15 @@ const PokemonsList = () => {
         data={pokemons}
         renderItem={renderItem}
         ItemSeparatorComponent={renderSeparator}
-        ListHeaderComponent={
-          (<CustomText style={PokemonsListStyles.title}>
+        ListHeaderComponent={(
+          <CustomText style={PokemonsListStyles.title}>
             POKEMONS
-           </CustomText>)
-        }
+          </CustomText>
+        )}
         ListFooterComponent={renderLoading}
         onEndReached={onEndReached}
       />
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 

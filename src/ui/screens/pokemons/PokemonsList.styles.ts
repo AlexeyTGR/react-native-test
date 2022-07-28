@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 const PokemonsListStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    // backgroundColor: 'darkseagreen',
   },
 
   title: {

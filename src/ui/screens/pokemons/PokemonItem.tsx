@@ -5,8 +5,8 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import type { AllPokemonsListType } from './PokemonsList';
 import type { RootStackParamListType } from '../../containers/navigation/StackNavigator';
-import PokemonsListStyles from './PokemonsList.styles';
 import CustomText from '../../components/CustomTextComp';
+import PokemonsListStyles from './PokemonsList.styles';
 
 type PropsType = {
   item: AllPokemonsListType;
@@ -19,6 +19,7 @@ type NavigationPropType = NativeStackNavigationProp<
 
 const PokemonItem: React.FC<PropsType> = ({ item }) => {
   const navigation = useNavigation<NavigationPropType>();
+
   return (
     <TouchableOpacity
       onPress={() => {
